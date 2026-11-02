@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Industrial Barcode Asset Tracking & Zebra ZPL II Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen">
+  <!-- Top Navigation Bar -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <span class="flex size-3 rounded-full bg-cyan-400 animate-pulse"></span>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+            <i class="fa-solid fa-barcode text-cyan-400"></i>
+            Industrial Barcode Asset Tracking &amp; Zebra ZPL II Studio
+          </h1>
+          <p class="text-xs text-slate-400 font-mono">Thermal Transfer Labels · Direct TCP Socket Port 9100 · Code 128 / QR Matrix</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 font-mono text-xs">
+        <div class="bg-slate-800/80 border border-slate-700 px-3 py-1.5 rounded">
+          <span class="text-slate-400">PRINTER HARDWARE:</span>
+          <span class="text-emerald-400 font-bold ml-1">ZEBRA ZT411 READY</span>
+        </div>
+        <div class="bg-slate-800/80 border border-slate-700 px-3 py-1.5 rounded">
+          <span class="text-slate-400">PORT:</span>
+          <span class="text-cyan-400 font-bold ml-1">RAW TCP 9100</span>
+        </div>
+        <a href="https://github.com/MHMITHUN/Industrial-Barcode-Asset-Tracking-ZPL" target="_blank"
+           class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-3 py-1.5 rounded transition flex items-center gap-1.5">
+          <i class="fa-brands fa-github"></i>
+          <span>GitHub Repo</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Label Designer Controls & Visual Thermal Label Preview (Left: 5 Cols) -->
+      <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="border-b border-slate-800 pb-3 mb-4">
+            <span class="text-[10px] font-mono text-cyan-400 font-bold tracking-wider uppercase">DESIGNER · THERMAL PREVIEW</span>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2 mt-0.5">
+              <i class="fa-solid fa-sliders text-cyan-400"></i>
+              Zebra Thermal Label Generator
+            </h2>
+          </div>
+
+          <div class="space-y-3 font-mono text-xs">
+            <div>
+              <label class="block text-slate-400 text-[11px] mb-1">Company / Facility Header:</label>
+              <input type="text" id="companyInput" value="ENTERPRISE APPAREL & TEXTILES LTD" oninput="updateLabel()"
+                     class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-slate-100 focus:outline-none focus:border-cyan-400">
+            </div>
+
+            <div>
+              <label class="block text-slate-400 text-[11px] mb-1">Industrial Zone / Location:</label>
+              <input type="text" id="locationInput" value="CENTRAL INDUSTRIAL ZONE · SECTOR 04" oninput="updateLabel()"
+                     class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-slate-100 focus:outline-none focus:border-cyan-400">
+            </div>
+
+            <div>
+              <label class="block text-slate-400 text-[11px] mb-1">Label Purpose:</label>
+              <select id="purposeSelect" onchange="updateLabel()"
+                      class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-slate-100 focus:outline-none focus:border-cyan-400">
+                <option value="CARTON SHIPPING LABEL">Export Carton Shipping Label (RMG)</option>
+                <option value="SEWING BUNDLE TRACKING">Sewing Bundle Floor Tracking Tag</option>
+                <option value="IT ASSET INVENTORY TAG">Enterprise IT Hardware Asset Tag</option>
+                <option value="CCTV MAINTENANCE PASS">CCTV & NVR Maintenance Tag</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-slate-400 text-[11px] mb-1">Style / Asset Title:</label>
+                <input type="text" id="styleInput" value="EXP-JKT-882" oninput="updateLabel()"
+                       class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-cyan-300">
+              </div>
+              <div>
+                <label class="block text-slate-400 text-[11px] mb-1">Lot / Serial Barcode:</label>
+                <input type="text" id="lotInput" value="LOT-2026-B12" oninput="updateLabel()"
+                       class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-1.5 text-cyan-300">
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulated Thermal Paper Label Preview -->
+          <div class="mt-5 bg-white text-black rounded-lg border-2 border-dashed border-slate-400 p-4 shadow-2xl font-mono">
+            <div class="border-b border-black/20 pb-2">
+              <p id="prevCompany" class="text-xs font-black tracking-tight">ENTERPRISE APPAREL &amp; TEXTILES LTD</p>
+              <p id="prevLocation" class="text-[9px] uppercase tracking-wider text-black/70">CENTRAL INDUSTRIAL ZONE · SECTOR 04</p>
+            </div>
+
+            <div class="mt-2 flex justify-between items-start text-[10px]">
+              <div>
+                <p id="prevPurpose" class="font-bold">CARTON SHIPPING LABEL</p>
+                <p class="mt-0.5">STYLE: <strong id="prevStyle" class="font-black">EXP-JKT-882</strong></p>
+                <p>LOT/SN: <strong id="prevLot" class="font-black">LOT-2026-B12</strong></p>
+              </div>
+              <!-- QR Code Mock -->
+              <div class="size-11 border-2 border-black p-0.5 flex items-center justify-center">
+                <div class="grid grid-cols-3 gap-0.5 w-full h-full">
+                  <div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div>
+                  <div class="bg-black"></div><div class="bg-white"></div><div class="bg-black"></div>
+                  <div class="bg-black"></div><div class="bg-black"></div><div class="bg-black"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Barcode Mock Stripes -->
+            <div class="mt-3 flex flex-col items-center">
+              <div class="flex h-10 w-full items-center justify-center gap-[2px] bg-white">
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 4px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 6px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 4px" class="h-full bg-black"></div>
+                <div style="width: 6px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 4px" class="h-full bg-black"></div>
+                <div style="width: 6px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 4px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 6px" class="h-full bg-black"></div>
+                <div style="width: 4px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 6px" class="h-full bg-black"></div>
+                <div style="width: 4px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 4px" class="h-full bg-black"></div>
+                <div style="width: 6px" class="h-full bg-black"></div>
+                <div style="width: 2px" class="h-full bg-black"></div>
+                <div style="width: 4px" class="h-full bg-black"></div>
+              </div>
+              <span id="prevBarcodeTxt" class="text-[10px] tracking-widest mt-1 font-bold">LOT-2026-B12</span>
+            </div>
+
+            <div class="mt-2 border-t border-black/20 pt-1 text-center text-[8px] text-black/60 font-bold">
+              FACTORY QA PASSED · IT SURVEILLANCE &amp; ASSET GOVERNANCE VERIFIED
+            </div>
+          </div>
+        </div>
+
+        <button onclick="simulatePrint()" id="printBtn"
+                class="mt-4 w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-slate-950 font-bold py-2.5 rounded-xl transition shadow flex items-center justify-center gap-2 text-xs font-mono">
+          <i class="fa-solid fa-print"></i>
+          <span>Simulate Direct Socket Print (TCP 9100)</span>
+        </button>
+      </div>
+
+      <!-- Raw ZPL II Code Inspector (Right: 7 Cols) -->
+      <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center border-b border-slate-800 pb-3 mb-4">
+            <div>
+              <span class="text-[10px] font-mono text-cyan-400 font-bold tracking-wider uppercase">RAW PRINTER SCRIPT</span>
+              <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-terminal text-cyan-400"></i>
+                Raw ZPL II Script (Direct Zebra ZT411 / TSC Feed)
+              </h3>
+            </div>
+            <button onclick="copyZpl()" id="copyBtn"
+                    class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 text-xs font-mono font-bold px-3 py-1 rounded transition flex items-center gap-1.5">
+              <i class="fa-solid fa-copy"></i>
+              <span>Copy ZPL</span>
+            </button>
+          </div>
+
+          <p class="text-xs text-slate-400 mb-3 font-mono">
+            This raw ZPL II code transmits directly over raw TCP socket port 9100 to industrial Zebra thermal transfer printers across the production floor:
+          </p>
+
+          <pre id="zplOutput" class="bg-black/95 border border-slate-800 rounded-xl p-4 font-mono text-xs text-cyan-300 overflow-x-auto leading-relaxed shadow-inner min-h-[280px]">
+^XA
+^FO40,30^A0N,32,32^FDENTERPRISE APPAREL &amp; TEXTILES LTD^FS
+^FO40,70^A0N,22,22^FDCENTRAL INDUSTRIAL ZONE · SECTOR 04^FS
+^FO40,105^GB450,2,2^FS
+^FO40,120^A0N,24,24^FDPURPOSE: CARTON SHIPPING LABEL^FS
+^FO40,150^A0N,26,26^FDSTYLE: EXP-JKT-882^FS
+^FO40,185^A0N,24,24^FDLOT/SER: LOT-2026-B12^FS
+^FO40,225^BY2,3,70^BCN,70,Y,N,N^FDLOT-2026-B12^FS
+^FO380,120^BQN,2,4^FDQA,EXP-JKT-882-LOT-2026-B12-VERIFIED^FS
+^FO40,320^A0N,18,18^FDQC PASSED · IT SURVEILLANCE VERIFIED^FS
+^XZ
+          </pre>
+        </div>
+
+        <div class="mt-4 bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-400">
+          <span class="text-cyan-400 font-bold">Tested Hardware Support:</span> Zebra ZT411 (Industrial), ZT230, GK420t, TSC TTP-244 Pro, Honeywell PC42t. Configured via Ethernet LAN and USB print servers.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500 font-mono">
+    Developed by <span class="text-slate-300 font-bold">MD. Mahamudul Hasan</span> · IT Officer &amp; Surveillance Systems Specialist · MIT License
+  </footer>
+
+  <script>
+    function updateLabel() {
+      const company = document.getElementById('companyInput').value;
+      const location = document.getElementById('locationInput').value;
+      const purpose = document.getElementById('purposeSelect').value;
+      const style = document.getElementById('styleInput').value;
+      const lot = document.getElementById('lotInput').value;
+
+      document.getElementById('prevCompany').innerText = company.toUpperCase();
+      document.getElementById('prevLocation').innerText = location.toUpperCase();
+      document.getElementById('prevPurpose').innerText = purpose.toUpperCase();
+      document.getElementById('prevStyle').innerText = style;
+      document.getElementById('prevLot').innerText = lot;
+      document.getElementById('prevBarcodeTxt').innerText = lot;
+
+      const zpl = `^XA
+^FO40,30^A0N,32,32^FD${company.toUpperCase()}^FS
+^FO40,70^A0N,22,22^FD${location.toUpperCase()}^FS
+^FO40,105^GB450,2,2^FS
+^FO40,120^A0N,24,24^FDPURPOSE: ${purpose.toUpperCase()}^FS
+^FO40,150^A0N,26,26^FDSTYLE: ${style}^FS
+^FO40,185^A0N,24,24^FDLOT/SER: ${lot}^FS
+^FO40,225^BY2,3,70^BCN,70,Y,N,N^FD${lot}^FS
+^FO380,120^BQN,2,4^FDQA,${style}-${lot}-VERIFIED^FS
+^FO40,320^A0N,18,18^FDQC PASSED · IT SURVEILLANCE VERIFIED^FS
+^XZ`;
+
+      document.getElementById('zplOutput').innerText = zpl;
+    }
+
+    function copyZpl() {
+      const zpl = document.getElementById('zplOutput').innerText;
+      navigator.clipboard.writeText(zpl);
+      const btn = document.getElementById('copyBtn');
+      btn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i><span>Copied!</span>';
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fa-solid fa-copy"></i><span>Copy ZPL</span>';
+      }, 1500);
+    }
+
+    function simulatePrint() {
+      const btn = document.getElementById('printBtn');
+      btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i><span>Transmitting to Zebra ZT411 (192.168.30.25:9100)...</span>';
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i><span>ZPL Transmitted Successfully (Feed Complete)</span>';
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa-solid fa-print"></i><span>Simulate Direct Socket Print (TCP 9100)</span>';
+        }, 2000);
+      }, 700);
+    }
+  </script>
+</body>
+</html>
