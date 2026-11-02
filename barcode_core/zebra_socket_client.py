@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Raw TCP Socket Client for Zebra / TSC Thermal Label Printers
-Author: MD. Mahamudul Hasan (IT Officer)
+Author: MD. Mahamudul Hasan
 Repository: Industrial-Barcode-Asset-Tracking-ZPL
 License: MIT
 

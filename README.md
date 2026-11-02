@@ -63,11 +63,11 @@ python barcode_core/zebra_socket_client.py
 
 ---
 
-## 👤 Author
+## 📄 License & Maintainer
 
-**MD. Mahamudul Hasan**  
-- **Role**: IT Officer  
-- **Email**: mhmmithun1@gmail.com  
-- **Phone**: +880 1560-027539  
-- **LinkedIn**: [linkedin.com/in/mahamudul0](https://linkedin.com/in/mahamudul0)  
-- **GitHub**: [github.com/MHMITHUN](https://github.com/MHMITHUN)  
+Maintained by **[MD. Mahamudul Hasan](https://github.com/MHMITHUN)**  
+- GitHub: [@MHMITHUN](https://github.com/MHMITHUN)  
+- LinkedIn: [linkedin.com/in/mahamudul0](https://linkedin.com/in/mahamudul0)  
+- Email: mhmmithun1@gmail.com  
+
+Released under the [MIT License](LICENSE).

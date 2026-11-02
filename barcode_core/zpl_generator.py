@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Zebra Programming Language (ZPL II) Template Generator
-Author: MD. Mahamudul Hasan (IT Officer)
+Author: MD. Mahamudul Hasan
 Repository: Industrial-Barcode-Asset-Tracking-ZPL
 License: MIT
 
